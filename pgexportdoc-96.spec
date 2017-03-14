@@ -1,7 +1,7 @@
 %global pgmajorversion 96
 %global pgpackageversion 9.6
 %global pginstdir /usr/pgsql-%{pgpackageversion}
-%global sname	pgbconsole
+%global sname	pgexportdoc
 
 Summary:	command line tool for export XML, TEXT and BYTEA documents from PostgreSQL
 Name:		pgexportdoc
