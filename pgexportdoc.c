@@ -23,6 +23,13 @@
 #include "pg_getopt.h"
 #include "pqexpbuffer.h"
 
+#if PG_VERSION_NUM >= 140000
+
+#include "common/string.h"
+
+#endif
+
+
 #if PG_VERSION_NUM >= 110000
 
 #include "catalog/pg_type_d.h"
@@ -78,7 +85,11 @@ pgexportdoc(const char *database, const struct _param * param)
 	PGresult	*result = NULL;
 	ExecStatusType status;
 
-#if PG_VERSION_NUM >= 100000
+#if PG_VERSION_NUM >= 140000
+
+	char	   *password = NULL;
+
+#elif PG_VERSION_NUM >= 100000
 
 	static char password[100];
 
@@ -92,7 +103,11 @@ pgexportdoc(const char *database, const struct _param * param)
 	if (param->pg_prompt == TRI_YES && !have_password)
 	{
 
-#if PG_VERSION_NUM >= 100000
+#if PG_VERSION_NUM >= 140000
+
+		password = simple_prompt("Password: ", false);
+
+#elif PG_VERSION_NUM >= 100000
 
 		simple_prompt("Password: ", password, sizeof(password), false);
 
@@ -148,7 +163,14 @@ pgexportdoc(const char *database, const struct _param * param)
 		{
 			PQfinish(conn);
 
-#if PG_VERSION_NUM >= 100000
+#if PG_VERSION_NUM >= 140000
+
+			if (password)
+				free(password);
+
+			password = simple_prompt("Password: ", false);
+
+#elif PG_VERSION_NUM >= 100000
 
 			simple_prompt("Password: ", password, sizeof(password), false);
 
