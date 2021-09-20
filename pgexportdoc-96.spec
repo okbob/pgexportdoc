@@ -5,7 +5,7 @@
 
 Summary:	command line tool for export XML, TEXT and BYTEA documents from PostgreSQL
 Name:		pgexportdoc
-Version:	0.1.1
+Version:	0.1.4
 Release:	1%{?dist}
 License:	BSD
 Group:		Applications/Databases
@@ -48,5 +48,8 @@ USE_PGXS=1 %{__make} %{?_smp_mflags} DESTDIR=%{buildroot} install
 %{_bindir}/%{name}
 
 %changelog
+* Mon Sep 20 2021 - Pavel Stehule <pavel.stehule@gmail.com> 0.1.4-1
+- fix build for PostgreSQL 14
+
 * Tue Feb 21 2017 - Pavel Stehule <pavel.stehule@gmail.com> 0.1.1-1
 - Initial RPM packaging for PostgreSQL RPM Repository
